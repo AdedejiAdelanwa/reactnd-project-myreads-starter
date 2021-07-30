@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAll } from "./BooksAPI";
+import { getAll, update } from "./BooksAPI";
 import BookShelf from "./BookShelf";
 
 const Home = () => {
   const [books, setBooks] = useState([]);
   const [shelves, setShelves] = useState([]);
+  const [shelfOption, setOptionShelf] = useState("");
 
   const sortBooksByShelf = async () => {
     const data = await getAll();
@@ -20,6 +21,13 @@ const Home = () => {
     });
 
     setShelves(Object.keys(booksByShelf));
+  };
+
+  const moveBook = (e, book, shelfOption) => {
+    // e.preventDefault();
+    setOptionShelf(() => e.target.value);
+
+    update(book, shelfOption).then((res) => console.log(res));
   };
 
   useEffect(() => {
@@ -38,8 +46,11 @@ const Home = () => {
             <BookShelf
               shelf={shelf}
               books={books}
+              shelfOption={shelfOption}
+              shelves={shelves}
               key={shelf}
               className="bookshelf"
+              moveBook={moveBook}
             />
           ))}
         </div>

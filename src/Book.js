@@ -1,5 +1,5 @@
 import React from "react";
-const Book = ({ book }) => {
+const Book = ({ book, shelf, shelves, moveBook, shelfOption }) => {
   return (
     <div className="book">
       <div className="book-top">
@@ -12,13 +12,19 @@ const Book = ({ book }) => {
           }}
         />
         <div className="book-shelf-changer">
-          <select>
+          <select
+            // defaultValue={book.shelf}
+            value={book.shelf}
+            onChange={(e) => moveBook(e, book, book.shelf)}
+          >
             <option value="move" disabled>
               Move to...
             </option>
-            <option value="currentlyReading">Currently Reading</option>
-            <option value="wantToRead">Want to Read</option>
-            <option value="read">Read</option>
+            {shelves.map((shelf) => (
+              <option key={shelf} value={shelf}>
+                {shelf}
+              </option>
+            ))}
             <option value="none">None</option>
           </select>
         </div>
