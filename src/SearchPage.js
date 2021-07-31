@@ -1,12 +1,35 @@
-import React, { useState } from "react";
-
+import React, { useState, useCallback } from "react";
+import debounce from "lodash.debounce";
+import { search } from "./BooksAPI";
 import { Link } from "react-router-dom";
+import Book from "./Book";
+import validSearchTerms from "./validSearchTerms";
 
-const SearchPage = () => {
+const SearchPage = ({ shelves }) => {
   const [queryParam, setQueryParam] = useState("");
+  const [searchedBooks, setSearchBooks] = useState([]);
+
+  const debounceQuery = useCallback(
+    debounce((newValue) => {
+      try {
+        if (newValue && validSearchTerms.includes(newValue.toLowerCase())) {
+          search(newValue).then((res) => {
+            setSearchBooks(res);
+          });
+        } else {
+          setSearchBooks([]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }, 1000),
+    []
+  );
 
   const handleChange = (e) => {
-    setQueryParam(e.target.value);
+    const { value: newValue } = e.target;
+    setQueryParam(newValue);
+    debounceQuery(newValue);
   };
 
   return (
@@ -25,8 +48,14 @@ const SearchPage = () => {
         </div>
       </div>
       <div className="search-books-results">
-        <p>{queryParam}</p>
-        <ol className="books-grid" />
+        <ol className="books-grid">
+          {searchedBooks &&
+            searchedBooks.map((book) => (
+              <li key={book.id}>
+                <Book shelves={shelves} book={book} />
+              </li>
+            ))}
+        </ol>
       </div>
     </div>
   );
