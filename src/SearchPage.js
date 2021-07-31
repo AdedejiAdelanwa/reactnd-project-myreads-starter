@@ -7,7 +7,6 @@ const SearchPage = () => {
 
   const handleChange = (e) => {
     setQueryParam(e.target.value);
-    console.log(queryParam);
   };
 
   return (
@@ -26,6 +25,7 @@ const SearchPage = () => {
         </div>
       </div>
       <div className="search-books-results">
+        <p>{queryParam}</p>
         <ol className="books-grid" />
       </div>
     </div>
