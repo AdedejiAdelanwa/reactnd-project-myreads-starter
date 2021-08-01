@@ -1,7 +1,7 @@
 import React from "react";
 import Book from "./Book";
 
-const BookShelf = ({ shelf, shelves, books, moveBook, shelfOption }) => {
+const BookShelf = ({ shelf, shelves, books, getBooks }) => {
   return (
     <div key={shelf.id} className="bookshelf">
       <h2 className="bookshelf-title">
@@ -18,13 +18,7 @@ const BookShelf = ({ shelf, shelves, books, moveBook, shelfOption }) => {
             .filter((book) => book.shelf === shelf)
             .map((book) => (
               <li key={book.id}>
-                <Book
-                  book={book}
-                  shelf={shelf}
-                  shelves={shelves}
-                  moveBook={moveBook}
-                  shelfOption={shelfOption}
-                />
+                <Book book={book} shelves={shelves} getBooks={getBooks} />
               </li>
             ))}
         </ol>

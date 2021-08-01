@@ -1,39 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { getAll, update } from "./BooksAPI";
+
 import BookShelf from "./BookShelf";
 
-const Home = () => {
-  const [books, setBooks] = useState([]);
-  const [shelves, setShelves] = useState([]);
-  const [shelfOption, setOptionShelf] = useState("");
-
-  const sortBooksByShelf = async () => {
-    const data = await getAll();
-    setBooks(data);
-    const booksByShelf = {};
-    data.forEach((book) => {
-      if (booksByShelf[book.shelf]) {
-        booksByShelf[book.shelf].push(book);
-      } else {
-        booksByShelf[book.shelf] = [book];
-      }
-    });
-
-    setShelves(Object.keys(booksByShelf));
-  };
-
-  const moveBook = (e, book, shelfOption) => {
-    // e.preventDefault();
-    setOptionShelf(() => e.target.value);
-
-    update(book, shelfOption).then((res) => console.log(res));
-  };
-
-  useEffect(() => {
-    sortBooksByShelf();
-  }, []);
-
+const Home = ({ books, shelves, getBooks }) => {
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -46,11 +16,10 @@ const Home = () => {
             <BookShelf
               shelf={shelf}
               books={books}
-              shelfOption={shelfOption}
               shelves={shelves}
               key={shelf}
               className="bookshelf"
-              moveBook={moveBook}
+              getBooks={getBooks}
             />
           ))}
         </div>
