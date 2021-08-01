@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Book from "./Book";
 import validSearchTerms from "./validSearchTerms";
 
-const SearchPage = ({ shelves }) => {
+const SearchPage = ({ shelves, getBooks }) => {
   const [queryParam, setQueryParam] = useState("");
   const [searchedBooks, setSearchBooks] = useState([]);
 
@@ -19,9 +19,7 @@ const SearchPage = ({ shelves }) => {
         } else {
           setSearchBooks([]);
         }
-      } catch (error) {
-        console.log(error);
-      }
+      } catch (error) {}
     }, 1000),
     []
   );
@@ -52,7 +50,7 @@ const SearchPage = ({ shelves }) => {
           {searchedBooks &&
             searchedBooks.map((book) => (
               <li key={book.id}>
-                <Book shelves={shelves} book={book} />
+                <Book getBooks={getBooks} shelves={shelves} book={book} />
               </li>
             ))}
         </ol>
