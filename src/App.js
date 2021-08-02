@@ -7,7 +7,7 @@ import "./App.css";
 import { getAll } from "./BooksAPI";
 
 const BooksApp = () => {
-  const [shelves, setShelves] = useState([]);
+  const shelves = ["currentlyReading", "wantToRead", "read"];
   const [books, setBooks] = useState([]);
 
   const getBooks = async () => {
@@ -25,8 +25,6 @@ const BooksApp = () => {
         booksByShelf[book.shelf] = [book];
       }
     });
-
-    setShelves(Object.keys(booksByShelf));
   };
 
   useEffect(() => {
