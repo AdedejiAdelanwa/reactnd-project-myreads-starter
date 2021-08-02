@@ -5,7 +5,8 @@ Read Haven is a web application that allows you categorize and add books to your
 - Currently Reading
 - Want To Read
 - Read
-  It also allows you search for books by the title or author and add them to your shelves
+
+It also allows you search for books by the title or author and add them to your shelves
 
 ![Home page with books on shelves](./sample_images/home.png)
 ![Search page](./sample_images/searchPage.png)
