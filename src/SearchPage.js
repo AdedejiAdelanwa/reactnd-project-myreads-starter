@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import PropTypes from "prop-types";
 import debounce from "lodash.debounce";
 import { search } from "./BooksAPI";
 import { Link } from "react-router-dom";
@@ -57,5 +58,9 @@ const SearchPage = ({ shelves, getBooks }) => {
       </div>
     </div>
   );
+};
+SearchPage.propTypes = {
+  shelves: PropTypes.array.isRequired,
+  getBooks: PropTypes.func.isRequired,
 };
 export default SearchPage;

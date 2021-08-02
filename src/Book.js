@@ -1,11 +1,11 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { update } from "./BooksAPI";
 const Book = ({ book, shelves, getBooks }) => {
   const smallThumbnail =
     book && book.imageLinks && book.imageLinks.smallThumbnail;
   const authors = book && book.authors;
   const moveBook = async (e) => {
-    // e.preventDefault();
     try {
       const updated = await update(book, e.target.value);
       updated && getBooks && getBooks();
@@ -40,5 +40,10 @@ const Book = ({ book, shelves, getBooks }) => {
       <div className="book-authors">{authors}</div>
     </div>
   );
+};
+Book.propTypes = {
+  book: PropTypes.object.isRequired,
+  shelves: PropTypes.array.isRequired,
+  getBooks: PropTypes.func.isRequired,
 };
 export default Book;
