@@ -8,6 +8,7 @@ import validSearchTerms from "./validSearchTerms";
 const SearchPage = ({ shelves, getBooks }) => {
   const [queryParam, setQueryParam] = useState("");
   const [searchedBooks, setSearchBooks] = useState([]);
+  const sessionBooks = JSON.parse(sessionStorage.getItem("sessionBooks"));
 
   const debounceQuery = useCallback(
     debounce((newValue) => {
@@ -48,11 +49,21 @@ const SearchPage = ({ shelves, getBooks }) => {
       <div className="search-books-results">
         <ol className="books-grid">
           {searchedBooks &&
-            searchedBooks.map((book) => (
-              <li key={book.id}>
-                <Book getBooks={getBooks} shelves={shelves} book={book} />
-              </li>
-            ))}
+            searchedBooks.map((book) =>
+              book.id in sessionBooks ? (
+                <li key={book.id}>
+                  <Book
+                    getBooks={getBooks}
+                    shelves={shelves}
+                    book={sessionBooks[book.id]}
+                  />
+                </li>
+              ) : (
+                <li key={book.id}>
+                  <Book getBooks={getBooks} shelves={shelves} book={book} />
+                </li>
+              )
+            )}
         </ol>
       </div>
     </div>

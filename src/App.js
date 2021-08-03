@@ -12,7 +12,17 @@ const BooksApp = () => {
 
   const getBooks = async () => {
     const data = await getAll();
+
     sortBooksByShelf(data);
+    saveToSession(data);
+  };
+
+  const saveToSession = (data) => {
+    const sessionBooks = {};
+    data.map((book) => (sessionBooks[book.id] = book));
+
+    const stringifyBooks = JSON.stringify(sessionBooks);
+    sessionStorage.setItem("sessionBooks", stringifyBooks);
   };
 
   const sortBooksByShelf = (data) => {
