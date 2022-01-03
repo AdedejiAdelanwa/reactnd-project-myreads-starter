@@ -1,10 +1,17 @@
 import React from "react";
 import Book from "./Book";
-import PropTypes from "prop-types";
+import { IBook } from "./App";
 
-const BookShelf = ({ shelf, shelves, books, getBooks }) => {
+interface IProps {
+  books: IBook[];
+  shelves: string[];
+  shelf: string;
+  getBooks: Function;
+}
+
+const BookShelf: React.FC<IProps> = ({ shelf, shelves, books, getBooks }) => {
   return (
-    <div key={shelf.id} className="bookshelf">
+    <div className="bookshelf">
       <h2 className="bookshelf-title">
         {shelf.charAt(0).toUpperCase() +
           shelf
@@ -27,10 +34,5 @@ const BookShelf = ({ shelf, shelves, books, getBooks }) => {
     </div>
   );
 };
-BookShelf.propTypes = {
-  shelf: PropTypes.string,
-  shelves: PropTypes.array,
-  books: PropTypes.array,
-  getBooks: PropTypes.func,
-};
+
 export default BookShelf;

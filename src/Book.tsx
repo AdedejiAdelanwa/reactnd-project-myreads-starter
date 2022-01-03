@@ -1,11 +1,18 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { update } from "./BooksAPI";
-const Book = ({ book, shelves, getBooks }) => {
+import { IBook } from "./App";
+
+interface IProps {
+  book: IBook;
+  shelves: string[];
+  getBooks: Function;
+}
+
+const Book: React.FC<IProps> = ({ book, shelves, getBooks }) => {
   const smallThumbnail =
     book && book.imageLinks && book.imageLinks.smallThumbnail;
   const authors = book && book.authors;
-  const moveBook = async (e) => {
+  const moveBook = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     try {
       const updated = await update(book, e.target.value);
       updated && getBooks && getBooks();
@@ -41,9 +48,5 @@ const Book = ({ book, shelves, getBooks }) => {
     </div>
   );
 };
-Book.propTypes = {
-  book: PropTypes.object.isRequired,
-  shelves: PropTypes.array.isRequired,
-  getBooks: PropTypes.func.isRequired,
-};
+
 export default Book;

@@ -1,14 +1,15 @@
 import React, { useState, useCallback } from "react";
-import PropTypes from "prop-types";
 import debounce from "lodash.debounce";
 import { search } from "./BooksAPI";
 import { Link } from "react-router-dom";
 import Book from "./Book";
 import validSearchTerms from "./validSearchTerms";
+import { IProps as Props } from "./Home";
+import { IBook } from "./App";
 
-const SearchPage = ({ shelves, getBooks }) => {
+const SearchPage: React.FC<Props> = ({ shelves, getBooks }) => {
   const [queryParam, setQueryParam] = useState("");
-  const [searchedBooks, setSearchBooks] = useState([]);
+  const [searchedBooks, setSearchBooks] = useState<IBook[]>([]);
 
   const debounceQuery = useCallback(
     debounce((newValue) => {
@@ -25,7 +26,7 @@ const SearchPage = ({ shelves, getBooks }) => {
     []
   );
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value: newValue } = e.target;
     setQueryParam(newValue);
     debounceQuery(newValue);
@@ -59,8 +60,5 @@ const SearchPage = ({ shelves, getBooks }) => {
     </div>
   );
 };
-SearchPage.propTypes = {
-  shelves: PropTypes.array.isRequired,
-  getBooks: PropTypes.func.isRequired,
-};
+
 export default SearchPage;

@@ -1,10 +1,15 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 import BookShelf from "./BookShelf";
+import { IBook } from "./App";
+export interface IProps {
+  books: IBook[];
+  shelves: string[];
+  getBooks: Function;
+}
 
-const Home = ({ books, shelves, getBooks }) => {
+const Home: React.FC<IProps> = ({ books, shelves, getBooks }) => {
   return (
     <div className="list-books">
       <div className="list-books-title">
@@ -19,7 +24,6 @@ const Home = ({ books, shelves, getBooks }) => {
               books={books}
               shelves={shelves}
               key={shelf}
-              className="bookshelf"
               getBooks={getBooks}
             />
           ))}
@@ -33,9 +37,5 @@ const Home = ({ books, shelves, getBooks }) => {
     </div>
   );
 };
-Home.propTypes = {
-  books: PropTypes.array.isRequired,
-  shelves: PropTypes.array.isRequired,
-  getBooks: PropTypes.func.isRequired,
-};
+
 export default Home;
